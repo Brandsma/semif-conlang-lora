@@ -1,4 +1,4 @@
-# semif-garbage
+# semif-conlang-lora
 
 Can a small language model learn a grammar it has never seen? This repo
 tests that with Garglish, a made-up rule-based language, and asks the
@@ -92,8 +92,8 @@ only slowly.
 ### 1. Clone and install
 
 ```bash
-git clone git@github.com:Brandsma/semif-garbage.git
-cd semif-garbage
+git clone git@github.com:Brandsma/semif-conlang-lora.git
+cd semif-conlang-lora
 python3 -m venv .venv
 . .venv/bin/activate
 pip install -r requirements.txt
