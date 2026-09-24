@@ -83,32 +83,88 @@ of the time instead of 30%, and they learned that statistic. Making
 plurality visible in the sentence would make the benchmark useful for
 comparing larger models.
 
-## Running it
+## Getting started
+
+You need Python 3.10 or newer and, for training, an NVIDIA GPU. The runs
+above used a 12 GB RTX 4070. Evaluating the 0.5B model also works on a CPU,
+only slowly.
+
+### 1. Clone and install
 
 ```bash
-python3 -m venv .venv && . .venv/bin/activate
+git clone git@github.com:Brandsma/semif-garbage.git
+cd semif-garbage
+python3 -m venv .venv
+. .venv/bin/activate
 pip install -r requirements.txt
-
-# dataset: 100k unique sentences, split by sentence into train/val/test
-python garbage_lang/build_dataset.py --n 100000
-
-# fine-tune (add --use-4bit for QLoRA, --no-wandb to skip W&B)
-python scripts/train_lora.py --model Qwen/Qwen2.5-0.5B-Instruct \
-  --train-limit 40000 --epochs 1 --output-dir runs/qwen0.5b-lora
-
-# evaluate a base model, or a fine-tuned one with --adapter
-python scripts/evaluate.py --base-model Qwen/Qwen2.5-0.5B-Instruct \
-  --adapter runs/qwen0.5b-lora/final --limit 3000
 ```
 
-`experiments/run_semif_lora.sh` runs the whole experiment above and
-writes summaries and per-question predictions to `experiments/results/`.
-For a W&B hyperparameter sweep: `wandb sweep configs/sweep.yaml`, then
-`wandb agent <sweep-id>`.
+Run everything below from the repo root with the venv active. The Qwen
+models download from Hugging Face on first use (about 1 GB for 0.5B,
+6 GB for 3B).
 
+### 2. Generate the data
+
+The dataset is not in the repo (the full training file is 186 MB), so
+build it first:
+
+```bash
+python garbage_lang/build_dataset.py --n 100000
+```
+
+This takes a few seconds and writes `data/train.jsonl`, `data/val.jsonl`
+and `data/test.jsonl` (80/10/10). `--n` is the number of unique sentences;
+each one becomes 2 or 3 questions, so 100k sentences give about 283k
+examples. The seed is fixed (`--seed 42`), so you get the same data used
+for the results above. For a quick test, `--n 1000` is enough.
+
+Each line is one question:
+
+```json
+{"id": "noul-17", "type": "noul", "state": "Garglish grammar rules: ...\nSentence: \"gostakko dodoshmi distim\"",
+ "question": "Is this sentence grammatically valid Garglish?", "label": "yes",
+ "meta": {"violations": [], "is_conditional": false, "condition_first": null}}
+```
+
+`meta` is only used for the evaluation breakdowns; the model never sees it.
+
+### 3. Evaluate a base model
+
+```bash
+python scripts/evaluate.py --base-model Qwen/Qwen2.5-0.5B-Instruct --limit 3000 --no-wandb
+```
+
+### 4. Fine-tune and evaluate again
+
+```bash
+python scripts/train_lora.py --model Qwen/Qwen2.5-0.5B-Instruct \
+  --train-limit 40000 --epochs 1 --output-dir runs/qwen0.5b-lora --no-wandb
+
+python scripts/evaluate.py --base-model Qwen/Qwen2.5-0.5B-Instruct \
+  --adapter runs/qwen0.5b-lora/final --limit 3000 --no-wandb
+```
+
+Add `--use-4bit` to train with QLoRA if you run short on GPU memory.
 Training computes the loss on the answer tokens only. Evaluation scores
 each allowed answer by its log-probability, as SemIf does;
 `--scoring generate` greedy-decodes an answer instead.
+
+### Reproducing the full experiment
+
+```bash
+experiments/run_semif_lora.sh
+```
+
+This runs steps 3 and 4 for both 0.5B and 3B (about 2 hours on an RTX
+4070) and writes summaries and per-question predictions to
+`experiments/results/`.
+
+### Weights & Biases
+
+Drop `--no-wandb` to log runs to W&B after `wandb login`. The experiment
+script logs offline by default; upload later with
+`wandb sync wandb/offline-run-*`. For a hyperparameter sweep, run
+`wandb sweep configs/sweep.yaml`, then `wandb agent <sweep-id>`.
 
 ## Layout
 
