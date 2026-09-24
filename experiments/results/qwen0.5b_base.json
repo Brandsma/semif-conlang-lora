@@ -1,0 +1,62 @@
+{
+  "choice": {
+    "acc": 0.15113636363636362,
+    "n": 880
+  },
+  "choice | label=case_marking": {
+    "acc": 0.0,
+    "n": 126
+  },
+  "choice | label=conditional": {
+    "acc": 0.0,
+    "n": 25
+  },
+  "choice | label=none": {
+    "acc": 0.0,
+    "n": 484
+  },
+  "choice | label=plurality": {
+    "acc": 0.0,
+    "n": 112
+  },
+  "choice | label=word_order": {
+    "acc": 1.0,
+    "n": 133
+  },
+  "noul": {
+    "acc": 0.4792843691148776,
+    "n": 1062
+  },
+  "noul | cond, if-clause first | label=no": {
+    "acc": 0.0,
+    "n": 98
+  },
+  "noul | cond, if-clause first | label=yes": {
+    "acc": 1.0,
+    "n": 85
+  },
+  "noul | cond, if-clause second | label=no": {
+    "acc": 0.0,
+    "n": 85
+  },
+  "noul | cond, if-clause second | label=yes": {
+    "acc": 1.0,
+    "n": 81
+  },
+  "noul | simple | label=no": {
+    "acc": 0.0106951871657754,
+    "n": 374
+  },
+  "noul | simple | label=yes": {
+    "acc": 1.0,
+    "n": 339
+  },
+  "overall": {
+    "acc": 0.214,
+    "n": 3000
+  },
+  "score": {
+    "acc": 0.0,
+    "n": 1058
+  }
+}

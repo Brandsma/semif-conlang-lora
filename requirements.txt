@@ -1,0 +1,8 @@
+wandb
+torch>=2.2
+transformers>=4.44
+peft>=0.12
+trl>=0.9
+datasets
+accelerate
+bitsandbytes

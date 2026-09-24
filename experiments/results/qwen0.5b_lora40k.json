@@ -1,0 +1,62 @@
+{
+  "choice": {
+    "acc": 0.8863636363636364,
+    "n": 880
+  },
+  "choice | label=case_marking": {
+    "acc": 1.0,
+    "n": 126
+  },
+  "choice | label=conditional": {
+    "acc": 1.0,
+    "n": 25
+  },
+  "choice | label=none": {
+    "acc": 0.9462809917355371,
+    "n": 484
+  },
+  "choice | label=plurality": {
+    "acc": 0.3392857142857143,
+    "n": 112
+  },
+  "choice | label=word_order": {
+    "acc": 1.0,
+    "n": 133
+  },
+  "noul": {
+    "acc": 0.8888888888888888,
+    "n": 1062
+  },
+  "noul | cond, if-clause first | label=no": {
+    "acc": 0.8469387755102041,
+    "n": 98
+  },
+  "noul | cond, if-clause first | label=yes": {
+    "acc": 1.0,
+    "n": 85
+  },
+  "noul | cond, if-clause second | label=no": {
+    "acc": 0.7764705882352941,
+    "n": 85
+  },
+  "noul | cond, if-clause second | label=yes": {
+    "acc": 1.0,
+    "n": 81
+  },
+  "noul | simple | label=no": {
+    "acc": 0.8155080213903744,
+    "n": 374
+  },
+  "noul | simple | label=yes": {
+    "acc": 0.9557522123893806,
+    "n": 339
+  },
+  "overall": {
+    "acc": 0.8543333333333333,
+    "n": 3000
+  },
+  "score": {
+    "acc": 0.7930056710775047,
+    "n": 1058
+  }
+}
