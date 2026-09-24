@@ -176,3 +176,7 @@ scripts/evaluate.py            SemIf-style evaluation
 experiments/                   experiment script and results
 configs/sweep.yaml             W&B sweep config
 ```
+
+## License
+
+MIT, see [LICENSE](LICENSE).
